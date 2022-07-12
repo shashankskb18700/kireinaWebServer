@@ -26,6 +26,11 @@ const corsOptions = {
   credentials: true,
 };
 
+// if you want to use it in offline means on local  host comment next line of code ;
+app.use(cors(corsOptions));
+
+// app.use(cors({ origin: 'https://redeemer-1a3d9.web.app', credentials: true }));
+
 app.get("/serve", (req, res) => {
   console.log("herer");
   res.set("Access-Control-Allow-Origin", "*");
