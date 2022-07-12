@@ -14,7 +14,7 @@ const app = express();
 
 app.use(express.json());
 
-const whitelist = ["https://kireinanime.web.app/"];
+const whitelist = ["https://kireinanime.web.app"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
@@ -29,7 +29,7 @@ const corsOptions = {
 // if you want to use it in offline means on local  host comment next line of code ;
 app.use(cors(corsOptions));
 
-app.use(cors({ origin: "https://kireinanime.web.app/", credentials: true }));
+// app.use(cors({ origin: "https://kireinanime.web.app/", credentials: true }));
 
 app.get("/serve", (req, res) => {
   console.log("herer");
