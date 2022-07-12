@@ -30,7 +30,22 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // app.use(cors({ origin: "https://kireinanime.web.app/", credentials: true }));
+app.get("/", async (req, res) => {
+  // const htmlfil = await fs.readFileSync("./htmlResume.html", "utf-8");
+  // await pdf
+  //   .create(htmlfil, options)
+  //   .toFile("./Resume.pdf", function (err, res) {
+  //     if (err) return console.log(err);
+  //     console.log(res);
+  //     // { filename: '/app/businesscard.pdf' }
+  //   });
+  res.set("Access-Control-Allow-Origin", "*");
+  // res.send(l);
 
+  res.status(200).send("hello");
+  // res.download("./htmlResume.html", "htmlResume.html");
+  // res.send(htmlfil);
+});
 app.get("/serve", (req, res) => {
   console.log("herer");
   res.set("Access-Control-Allow-Origin", "*");
