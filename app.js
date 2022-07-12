@@ -9,6 +9,7 @@ import axios from "axios";
 import levenshtein from "fast-levenshtein";
 import translate from "translate";
 import _, { map } from "underscore";
+import cors from "cors";
 
 const app = express();
 
