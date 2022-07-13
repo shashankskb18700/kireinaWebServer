@@ -182,8 +182,8 @@ app.post("/mored", async (req, res) => {
   res.send(JSON.stringify(valu));
 });
 
-const port = process.env.port || 5000;
+const PORT = process.env.PORT || 5000;
 
-app.listen(port, () => {
+app.listen(PORT, () => {
   console.log("on port 5000");
 });
