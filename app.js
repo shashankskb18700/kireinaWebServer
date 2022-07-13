@@ -61,6 +61,8 @@ app.post("/search", async (req, res) => {
   //   `https://cdn.animenewsnetwork.com/encyclopedia/api.xml?title=~${req.body.name}`
   // );
 
+  /// sare cors error anime vostfr se aa raha thho usko thik karo sab thik ho jae ga , aur ye theek karna bahut jaruri hai
+
   // console.log(response.text);
 
   //ANN api
@@ -68,14 +70,38 @@ app.post("/search", async (req, res) => {
     `https://cdn.animenewsnetwork.com/encyclopedia/api.xml?title=~${req.body.name}`
   );
 
+  //----------------------------------------------------------------------------
+  // const displayInfo = function(info){console.log(`[INFO]  ${info}`);}
+  // const displayError = function(err){console.log(`[ERROR]  ${err}`);}
+
+  //   var d;
+
+  // displayInfo("Connexion en cours...");
+  // //VF same methods as vostfr
+  // api.loadAnimeVF().then(async data => {
+  //     displayInfo("Connexion effectuée...");
+  //     console.log(data);
+  // }).catch(err => displayError(err));
+
+  //   api.loadAnime().then(async (data) => {
+  //     displayInfo("Connexion effectuée...");
+
+  //     var another = api.searchAnime(data, "another");
+
+  //   }).catch(err => displayError(err));
+
+  //----------------------------------------------------------------------
+
   //animeVostfr api
-  // const anotherData = await animeVostfr.loadAnime(); ///***  */
+
+  const dataVF = await animeVostfr.loadAnimeVF();
+  const anotherData = await animeVostfr.loadAnime(); ///***  */
 
   // var moreData = await animeVostfr.searchAnime(anotherData, `${req.body.name}`);
   //
 
-  // var moreData = await animeVostfr.searchAnime(anotherData, req.body.name);
-  // console.log(moreData);///***  */
+  var moreData = await animeVostfr.searchAnime(anotherData, req.body.name);
+  console.log(moreData); ///***  */
 
   //
   // res.send(JSON.stringify(moreData));
@@ -95,18 +121,18 @@ app.post("/search", async (req, res) => {
   // console.log("Youtube embed trailer link: ", valu.trailer);
   // console.log("Episodes: ", valu.eps);
 
-  //
-  // var bestScore = animeVostfr.bestScoreAnime(anotherData);///***  */
-  // var popularAnime = animeVostfr.popularAnime(anotherData);///***  */
-  //
+  // //
+  var bestScore = animeVostfr.bestScoreAnime(anotherData); ///***  */
+  var popularAnime = animeVostfr.popularAnime(anotherData); ///***  */
+
   xml2js.parseString(va.data, function (err, result) {
     // fs.writeFileSync("./real.json", JSON.stringify(result, null, 2), "utf-8");
     console.log(result);
     let rre = {
       result: result,
-      // d: moreData,
-      // bestScore: bestScore,
-      // popularAnime: popularAnime,
+      d: moreData,
+      bestScore: bestScore,
+      popularAnime: popularAnime,
     };
     // res.set("Access-Control-Allow-Origin", "*");
     // res.header("Access-Control-Allow-Origin", "https://kireinanime.web.app/"); // update to match the domain you will make the request from
