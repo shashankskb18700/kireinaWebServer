@@ -104,6 +104,8 @@ app.post("/post", async (req, res) => {
       bestScore: bestScore,
       popularAnime: popularAnime,
     };
+    res.set("Access-Control-Allow-Origin", "*");
+
     res.send(JSON.stringify(rre, null, 2));
   });
   // console.log(va);
