@@ -55,7 +55,7 @@ app.get("/serve", (req, res) => {
   });
 });
 
-app.post("/post", async (req, res) => {
+app.post("/search", async (req, res) => {
   console.log(req.body);
   // const response = await fetch(
   //   `https://cdn.animenewsnetwork.com/encyclopedia/api.xml?title=~${req.body.name}`
