@@ -76,10 +76,10 @@ app.post("/search", async (req, res) => {
   //   console.log(`[ERROR]  ${err}`);
   // };
 
-  let j = await axios.get(
-    "https://neko-sama.fr/anime/info/7892-koe-no-katachi-vostfr"
-  );
-  console.log(j);
+  // let j = await axios.get(
+  //   "https://neko-sama.fr/anime/info/7892-koe-no-katachi-vostfr"
+  // );
+  // console.log(j);
 
   // var d;
 
