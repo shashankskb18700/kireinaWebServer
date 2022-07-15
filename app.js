@@ -28,7 +28,7 @@ const corsOptions = {
 };
 
 // if you want to use it in offline means on local  host comment next line of code ;
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // app.use(cors({ origin: "https://kireinanime.web.app/", credentials: true }));
 app.get("/", async (req, res) => {
@@ -61,8 +61,6 @@ app.post("/search", async (req, res) => {
   //   `https://cdn.animenewsnetwork.com/encyclopedia/api.xml?title=~${req.body.name}`
   // );
 
-  /// sare cors error anime vostfr se aa raha thho usko thik karo sab thik ho jae ga , aur ye theek karna bahut jaruri hai
-
   // console.log(response.text);
 
   //ANN api
@@ -71,34 +69,37 @@ app.post("/search", async (req, res) => {
   );
 
   //----------------------------------------------------------------------------
-  const displayInfo = function (info) {
-    console.log(`[INFO]  ${info}`);
-  };
-  const displayError = function (err) {
-    console.log(`[ERROR]  ${err}`);
-  };
+  // const displayInfo = function (info) {
+  //   console.log(`[INFO]  ${info}`);
+  // };
+  // const displayError = function (err) {
+  //   console.log(`[ERROR]  ${err}`);
+  // };
 
-  var d;
+  let j = await axios.get("https://neko-sama.fr/animes-search-vf.json");
+  console.log(j);
 
-  displayInfo("Connexion en cours...");
-  //VF same methods as vostfr
-  api
-    .loadAnimeVF()
-    .then(async (data) => {
-      displayInfo("Connexion effectuée...");
-      console.log(data);
-    })
-    .catch((err) => displayError(err));
+  // var d;
 
-  api
-    .loadAnime()
-    .then(async (data) => {
-      displayInfo("Connexion effectuée...");
+  // displayInfo("Connexion en cours...");
+  // //VF same methods as vostfr
+  // api
+  //   .loadAnimeVF()
+  //   .then(async (data) => {
+  //     displayInfo("Connexion effectuée...");
+  //     console.log(data);
+  //   })
+  //   .catch((err) => displayError(err));
 
-      var another = api.searchAnime(data, req.body.name);
-      res.send(another);
-    })
-    .catch((err) => displayError(err));
+  // api
+  //   .loadAnime()
+  //   .then(async (data) => {
+  //     displayInfo("Connexion effectuée...");
+
+  //     var another = api.searchAnime(data, req.body.name);
+  //     res.send(another);
+  //   })
+  //   .catch((err) => displayError(err));
 
   //----------------------------------------------------------------------
 
@@ -141,6 +142,12 @@ app.post("/search", async (req, res) => {
     let rre = {
       result: result,
       // d: moreData,
+
+      //
+      // only offline
+      d: j,
+      //
+      //
       // bestScore: bestScore,
       // popularAnime: popularAnime,
     };
