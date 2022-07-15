@@ -15,7 +15,7 @@ const app = express();
 
 app.use(express.json());
 
-const whitelist = ["https://kireinanime.web.app"];
+const whitelist = ["https://kireinanime.web.app", "https://neko-sama.fr"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
@@ -76,9 +76,9 @@ app.post("/search", async (req, res) => {
   //   console.log(`[ERROR]  ${err}`);
   // };
 
-  // let j = await axios.get(
-  //   "https://neko-sama.fr/anime/info/7892-koe-no-katachi-vostfr"
-  // );
+  let j = await axios.get(
+    "https://neko-sama.fr/anime/info/7892-koe-no-katachi-vostfr"
+  );
   // console.log(j);
 
   // var d;
