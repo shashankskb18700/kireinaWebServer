@@ -32,9 +32,9 @@ const corsOptions = {
 // "https://neko-sama.fr"
 
 // if you want to use it in offline means on local  host comment next line of code ;
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
-app.use(cors({ origin: "https://kireinanime.web.app/", credentials: true }));
+// app.use(cors({ origin: "https://kireinanime.web.app/", credentials: true }));
 app.get("/", async (req, res) => {
   // const htmlfil = await fs.readFileSync("./htmlResume.html", "utf-8");
   // await pdf
@@ -278,9 +278,9 @@ app.post("/vostfr", async (req, res) => {
 app.post("/moreData", async (req, res) => {
   console.log(req.body);
 
-  // const moreDetails = await axios.get(
-  //   `https://www.neko-sama.fr${req.body.url}`
-  // );
+  const moreDetails = await axios.get(
+    `https://www.neko-sama.fr${req.body.url}`
+  );
 
   // let parser = new DomParser();
   // let document = parseFromString(moreDetails.data);
@@ -295,9 +295,9 @@ app.post("/moreData", async (req, res) => {
 
   console.log(moreDetails.data);
 
-  // res.send(JSON.stringify(moreDetails.data));
+  res.send(JSON.stringify(moreDetails.data));
 
-  res.send("");
+  // res.send("");
 });
 
 const PORT = process.env.PORT || 5000;
