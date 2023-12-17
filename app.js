@@ -29,6 +29,8 @@ const corsOptions = {
   credentials: true,
 };
 
+// "https://neko-sama.fr"
+
 // if you want to use it in offline means on local  host comment next line of code ;
 // app.use(cors(corsOptions));
 
@@ -45,9 +47,7 @@ app.get("/", async (req, res) => {
   res.set("Access-Control-Allow-Origin", "*");
   // res.send(l);
 
-  res.status(200).send("hello");
-  // res.download("./htmlResume.html", "htmlResume.html");
-  // res.send(htmlfil);
+  // res.status(200).send("hello");
 });
 app.get("/serve", (req, res) => {
   console.log("herer");
@@ -278,9 +278,9 @@ app.post("/vostfr", async (req, res) => {
 app.post("/moreData", async (req, res) => {
   console.log(req.body);
 
-  const moreDetails = await axios.get(
-    `https://www.neko-sama.fr${req.body.url}`
-  );
+  // const moreDetails = await axios.get(
+  //   `https://www.neko-sama.fr${req.body.url}`
+  // );
 
   // let parser = new DomParser();
   // let document = parseFromString(moreDetails.data);
@@ -295,7 +295,9 @@ app.post("/moreData", async (req, res) => {
 
   console.log(moreDetails.data);
 
-  res.send(JSON.stringify(moreDetails.data));
+  // res.send(JSON.stringify(moreDetails.data));
+
+  res.send("");
 });
 
 const PORT = process.env.PORT || 5000;
