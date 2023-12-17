@@ -32,7 +32,7 @@ const corsOptions = {
 // if you want to use it in offline means on local  host comment next line of code ;
 // app.use(cors(corsOptions));
 
-// app.use(cors({ origin: "https://kireinanime.web.app/", credentials: true }));
+app.use(cors({ origin: "https://kireinanime.web.app/", credentials: true }));
 app.get("/", async (req, res) => {
   // const htmlfil = await fs.readFileSync("./htmlResume.html", "utf-8");
   // await pdf
@@ -282,17 +282,16 @@ app.post("/moreData", async (req, res) => {
     `https://www.neko-sama.fr${req.body.url}`
   );
 
-
   // let parser = new DomParser();
-    // let document = parseFromString(moreDetails.data);
-    // let synop = document
-    //   .getElementsByClassName("synopsis")[0]
-    //   .getElementsByTagName("p")[0].innerHTML;
-    // let ytb = document.getElementsByTagName("iframe")[0];
-    // let trailer = ytb ? ytb.getAttribute("src") : false;
-    // let banner = document.getElementById("head").getAttribute("style");
-    // banner = banner.substring(banner.indexOf("url("));
-    // banner = banner.substring(4, banner.indexOf(")"));
+  // let document = parseFromString(moreDetails.data);
+  // let synop = document
+  //   .getElementsByClassName("synopsis")[0]
+  //   .getElementsByTagName("p")[0].innerHTML;
+  // let ytb = document.getElementsByTagName("iframe")[0];
+  // let trailer = ytb ? ytb.getAttribute("src") : false;
+  // let banner = document.getElementById("head").getAttribute("style");
+  // banner = banner.substring(banner.indexOf("url("));
+  // banner = banner.substring(4, banner.indexOf(")"));
 
   console.log(moreDetails.data);
 
