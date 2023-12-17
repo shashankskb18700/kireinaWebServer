@@ -10,6 +10,8 @@ import levenshtein from "fast-levenshtein";
 import translate from "translate";
 import _, { map } from "underscore";
 import cors from "cors";
+import { readFile } from "fs/promises";
+import { parseFromString } from "dom-parser";
 
 const app = express();
 
@@ -28,7 +30,7 @@ const corsOptions = {
 };
 
 // if you want to use it in offline means on local  host comment next line of code ;
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // app.use(cors({ origin: "https://kireinanime.web.app/", credentials: true }));
 app.get("/", async (req, res) => {
@@ -236,6 +238,65 @@ app.post("/mored", async (req, res) => {
   console.log("Youtube embed trailer link: ", valu.trailer);
   console.log("Episodes: ", valu.eps);
   res.send(JSON.stringify(valu));
+});
+
+app.post("/vostfr", async (req, res) => {
+  console.log(req.body);
+  let title = req.body.name;
+  const getAnimeByTitle = (elem, name) => {
+    name = name.toLowerCase().trim();
+
+    let title = elem.title
+      ? elem.title.toLowerCase().trim().includes(name)
+      : false;
+    let title_english = elem.title_english
+      ? elem.title_english.toLowerCase().trim().includes(name)
+      : false;
+    let title_romanji = elem.title_romanji
+      ? elem.title_romanji.toLowerCase().trim().includes(name)
+      : false;
+    let others = elem.others
+      ? elem.others.toLowerCase().trim().includes(name)
+      : false;
+
+    return title || title_english || title_romanji || others;
+  };
+
+  var vostfrData = JSON.parse(
+    await readFile(new URL("./vostfrData.json", import.meta.url))
+  );
+
+  // console.log(vostfrData);
+
+  const additional = vostfrData.filter((elem) => getAnimeByTitle(elem, title));
+
+  // console.log(additional);
+
+  res.send(JSON.stringify(additional));
+});
+
+app.post("/moreData", async (req, res) => {
+  console.log(req.body);
+
+  const moreDetails = await axios.get(
+    `https://www.neko-sama.fr${req.body.url}`
+  );
+
+
+  // let parser = new DomParser();
+    // let document = parseFromString(moreDetails.data);
+    // let synop = document
+    //   .getElementsByClassName("synopsis")[0]
+    //   .getElementsByTagName("p")[0].innerHTML;
+    // let ytb = document.getElementsByTagName("iframe")[0];
+    // let trailer = ytb ? ytb.getAttribute("src") : false;
+    // let banner = document.getElementById("head").getAttribute("style");
+    // banner = banner.substring(banner.indexOf("url("));
+    // banner = banner.substring(4, banner.indexOf(")"));
+
+  console.log(moreDetails.data);
+
+  res.send(JSON.stringify(moreDetails.data));
 });
 
 const PORT = process.env.PORT || 5000;
