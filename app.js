@@ -279,16 +279,18 @@ app.post("/vostfr", async (req, res) => {
 app.post("/moreData", async (req, res) => {
   // console.log(req.body);
 
-  // let moreDetails = {};
+  let moreDetails = {};
   // try {
   //   moreDetails = await animeVostfr.getMoreInformation(req.body.url);
   // } catch (e) {
   //   console.log(e);
   // }
 
-  const moreDetails = await cloudscraper(
-    `https://www.neko-sama.fr${req.body.url}`
-  );
+  try {
+    moreDetails = await cloudscraper(`https://www.neko-sama.fr${req.body.url}`);
+  } catch (e) {
+    console.log(e);
+  }
 
   // let parser = new DomParser();
   // let document = parser.parseFromString(moreDetails);
