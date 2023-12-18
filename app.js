@@ -278,13 +278,13 @@ app.post("/vostfr", async (req, res) => {
 app.post("/moreData", async (req, res) => {
   console.log(req.body.url);
 
-  // let moreDetails = {};
+  let moreDetails = await animeVostfr
+    .getMoreInformation(req.body.url)
+    .cathch((e) => console.log(e));
 
-  // moreDetails = await animeVostfr.getMoreInformation(req.body.url);
-
-  const moreDetails = await axios.get(
-    `https://www.neko-sama.fr${req.body.url}`
-  );
+  // const moreDetails = await axios.get(
+  //   `https://www.neko-sama.fr${req.body.url}`
+  // );
 
   // let parser = new DomParser();
   // let document = parseFromString(moreDetails.data);
