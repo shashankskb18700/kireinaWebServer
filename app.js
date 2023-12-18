@@ -305,7 +305,8 @@ app.post("/moreData", async (req, res) => {
   // synop = moreDetails.synop;
   // trailer = moreDetails.trailer;
   // const data = { banner: banner, synop: synop, trailer: trailer };
-  console.log(moreDetails.banner);
+  console.log("req.body.url=" + req.body.url);
+  console.log(moreDetails);
   console.log(moreDetails.synop);
   console.log(moreDetails.trailer);
 
