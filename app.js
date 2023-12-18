@@ -278,9 +278,16 @@ app.post("/vostfr", async (req, res) => {
 app.post("/moreData", async (req, res) => {
   console.log(req.body);
 
-  const moreDetails = await axios.get(
-    `https://www.neko-sama.fr${req.body.url}`
-  );
+  let moreDetails = {};
+  try {
+    moreDetails = await animeVostfr.getMoreInformation(req.body.url);
+  } catch (e) {
+    console.log(e);
+  }
+
+  // const moreDetails = await axios.get(
+  //   `https://www.neko-sama.fr${req.body.url}`
+  // );
 
   // let parser = new DomParser();
   // let document = parseFromString(moreDetails.data);
@@ -293,9 +300,18 @@ app.post("/moreData", async (req, res) => {
   // banner = banner.substring(banner.indexOf("url("));
   // banner = banner.substring(4, banner.indexOf(")"));
 
-  console.log(moreDetails.data);
+  console.log("moreDetails ---------------------------------------------");
+  // banner = moreDetails.banner;
+  // synop = moreDetails.synop;
+  // trailer = moreDetails.trailer;
+  // const data = { banner: banner, synop: synop, trailer: trailer };
+  console.log(moreDetails.banner);
+  console.log(moreDetails.synop);
+  console.log(moreDetails.trailer);
 
-  res.send(JSON.stringify(moreDetails.data));
+  res.send(
+    JSON.stringify([moreDetails.banner, moreDetails.trailer, moreDetails.synop])
+  );
 
   // res.send("");
 });
