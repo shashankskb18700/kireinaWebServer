@@ -276,7 +276,7 @@ app.post("/vostfr", async (req, res) => {
 });
 
 app.post("/moreData", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   let moreDetails = {};
   try {
