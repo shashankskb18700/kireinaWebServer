@@ -276,11 +276,14 @@ app.post("/vostfr", async (req, res) => {
 });
 
 app.post("/moreData", async (req, res) => {
-  console.log(req.body.url);
+  console.log(req.body);
 
-  let moreDetails = await animeVostfr
-    .getMoreInformation(req.body.url)
-    .cathch((e) => console.log(e));
+  let moreDetails = {};
+  try {
+    moreDetails = await animeVostfr.getMoreInformation(req.body.url);
+  } catch (e) {
+    console.log(e);
+  }
 
   // const moreDetails = await axios.get(
   //   `https://www.neko-sama.fr${req.body.url}`
@@ -302,7 +305,7 @@ app.post("/moreData", async (req, res) => {
   // synop = moreDetails.synop;
   // trailer = moreDetails.trailer;
   // const data = { banner: banner, synop: synop, trailer: trailer };
-  console.log("req.body.url=" + req.body.url);
+  console.log("req.body.url" + req.body.url);
   console.log(moreDetails);
   console.log(moreDetails.synop);
   console.log(moreDetails.trailer);
