@@ -11,7 +11,8 @@ import translate from "translate";
 import _, { map } from "underscore";
 import cors from "cors";
 import { readFile } from "fs/promises";
-import { parseFromString } from "dom-parser";
+import cloudscraper from "cloudscraper";
+// import { DomParser } from "dom-parser";
 
 const app = express();
 
@@ -278,16 +279,30 @@ app.post("/vostfr", async (req, res) => {
 app.post("/moreData", async (req, res) => {
   // console.log(req.body);
 
-  let moreDetails = {};
-  try {
-    moreDetails = await animeVostfr.getMoreInformation(req.body.url);
-  } catch (e) {
-    console.log(e);
-  }
+  // let moreDetails = {};
+  // try {
+  //   moreDetails = await animeVostfr.getMoreInformation(req.body.url);
+  // } catch (e) {
+  //   console.log(e);
+  // }
 
-  // const moreDetails = await axios.get(
-  //   `https://www.neko-sama.fr${req.body.url}`
-  // );
+  const moreDetails = await cloudscraper(
+    `https://www.neko-sama.fr${req.body.url}`
+  );
+
+  // let parser = new DomParser();
+  // let document = parser.parseFromString(moreDetails);
+  // let synop = document
+  //   .getElementsByClassName("synopsis")[0]
+  //   .getElementsByTagName("p")[0].innerHTML;
+  // let ytb = document.getElementsByTagName("iframe")[0];
+  // let banner = document.getElementById("head").getAttribute("style");
+  // banner = banner.substring(banner.indexOf("url("));
+  // banner = banner.substring(4, banner.indexOf(")"));
+
+  // let result = html.substring(html.indexOf("episodes"));
+  // result = result.substring(0, result.indexOf("$(document)"));
+  // result = eval(result);
 
   // let parser = new DomParser();
   // let document = parseFromString(moreDetails.data);
@@ -305,14 +320,20 @@ app.post("/moreData", async (req, res) => {
   // synop = moreDetails.synop;
   // trailer = moreDetails.trailer;
   // const data = { banner: banner, synop: synop, trailer: trailer };
-  console.log("req.body.url" + req.body.url);
-  console.log(moreDetails);
-  console.log(moreDetails.synop);
-  console.log(moreDetails.trailer);
+  // console.log("req.body.url" + req.body.url);
+  //   return{
+  //     synop: synop,
+  //     banner: banner,
+  //     trailer: ytb ? ytb.getAttribute('src') : false,
+  //     eps: result
+  // };
+  // console.log("synop" + synop);
+  // console.log("banner" + banner);
+  // console.log("ytb" + ytb);
+  // console.log(moreDetails.synop);
+  // console.log(moreDetails.trailer);
 
-  res.send(
-    JSON.stringify([moreDetails.banner, moreDetails.trailer, moreDetails.synop])
-  );
+  res.send(JSON.stringify(moreDetails));
 
   // res.send("");
 });
