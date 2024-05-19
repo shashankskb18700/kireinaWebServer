@@ -1,7 +1,6 @@
 {
   "name": "kirienabackend",
   "version": "1.0.0",
-  "type": "module",
   "description": "",
   "main": "app.js",
   "engines": {
@@ -15,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "anime-vostfr": "^1.2.3",
+    "anime-wallpaper": "^2.0.0",
     "axios": "^0.25.0",
     "cloudscraper": "^4.6.0",
     "cors": "^2.8.5",
@@ -25,6 +25,7 @@
     "nodemon": "^2.0.15",
     "translate": "^1.4.1",
     "underscore": "^1.13.3",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.4.23",
+    "youtube-sr": "^4.3.11"
   }
 }

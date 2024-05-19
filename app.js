@@ -1,17 +1,19 @@
 // const { response } = require("express");
 // const express = require("express");
-import animeVostfr from "anime-vostfr";
-import express, { json } from "express";
+// const animeVostfr = require("anime-vostfr");
+const express = require("express");
 // const fetch = require("node-fetch");
-import fetch from "node-fetch";
-import xml2js from "xml2js";
-import axios from "axios";
-import levenshtein from "fast-levenshtein";
-import translate from "translate";
-import _, { map } from "underscore";
-import cors from "cors";
-import { readFile } from "fs/promises";
-import cloudscraper from "cloudscraper";
+// import fetch from "node-fetch";
+const xml2js = require("xml2js");
+const axios = require("axios");
+const levenshtein = require("fast-levenshtein");
+const translate = require("translate");
+// const _,
+//   { map } = require("underscore");
+const cors = require("cors");
+const { readFile } = require("fs/promises");
+const YouTube = require("youtube-sr").default;
+
 // import { DomParser } from "dom-parser";
 
 const app = express();
@@ -30,12 +32,15 @@ const corsOptions = {
   credentials: true,
 };
 
+const { AnimeWallpaper, AnimeSource } = require("anime-wallpaper");
+const wallpaper = new AnimeWallpaper();
 // "https://neko-sama.fr"
 
 // if you want to use it in offline means on local  host comment next line of code ;
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // app.use(cors({ origin: "https://kireinanime.web.app/", credentials: true }));
+
 app.get("/", async (req, res) => {
   // const htmlfil = await fs.readFileSync("./htmlResume.html", "utf-8");
   // await pdf
@@ -70,6 +75,17 @@ app.post("/search", async (req, res) => {
   const va = await axios.get(
     `https://cdn.animenewsnetwork.com/encyclopedia/api.xml?title=~${req.body.name}`
   );
+
+  let coverPic = "";
+
+  try {
+    coverPic = await wallpaper.search(
+      { title: req.body.name },
+      AnimeSource.WallHaven
+    );
+  } catch (e) {
+    console.log(e);
+  }
 
   //----------------------------------------------------------------------------
   // const displayInfo = function (info) {
@@ -144,8 +160,10 @@ app.post("/search", async (req, res) => {
   xml2js.parseString(va.data, function (err, result) {
     // fs.writeFileSync("./real.json", JSON.stringify(result, null, 2), "utf-8");
     console.log(result);
+
     let rre = {
       result: result,
+      wallpaper: coverPic,
       // d: moreData,
       //
       //
@@ -263,9 +281,10 @@ app.post("/vostfr", async (req, res) => {
     return title || title_english || title_romanji || others;
   };
 
-  var vostfrData = JSON.parse(
-    await readFile(new URL("./vostfrData.json", import.meta.url))
-  );
+  // var vostfrData = JSON.parse(
+  //   await readFile(new URL("./vostfrData.json", import.meta.url))
+  // );
+  var vostfrData = [];
 
   // console.log(vostfrData);
 
@@ -291,6 +310,14 @@ app.post("/moreData", async (req, res) => {
   } catch (e) {
     console.log(e);
   }
+
+  // try {
+  //   moreDetails = CloudflareBypasser.request(
+  //     `https://www.neko-sama.fr${req.body.url}`
+  //   );
+  // } catch (e) {
+  //   console.log(e);
+  // }
 
   // let parser = new DomParser();
   // let document = parser.parseFromString(moreDetails);
@@ -338,6 +365,26 @@ app.post("/moreData", async (req, res) => {
   res.send(JSON.stringify(moreDetails));
 
   // res.send("");
+});
+
+app.post("/trailer", async (req, res) => {
+  const name = req.body.name;
+  const videos = await YouTube.search(req.body.name, { limit: 25 });
+  let url = "";
+
+  // console.log(
+  //   videos.map((m, i) => `[${++i}] ${m.title} (${m.url})`).join("\n")
+  // );
+
+  videos.map((m, i) => {
+    if (m.title.toLocaleLowerCase().indexOf("trailer") > -1) {
+      url = m.url;
+      url = url.replace("watch", "embed");
+      console.log(url);
+    }
+  });
+
+  res.send(url);
 });
 
 const PORT = process.env.PORT || 5000;
