@@ -39,7 +39,7 @@ const wallpaper = new AnimeWallpaper();
 // if you want to use it in offline means on local  host comment next line of code ;
 app.use(cors(corsOptions));
 
-app.use(cors({ origin: "https://kireinanime.web.app/", credentials: true }));
+// app.use(cors({ origin: "https://kireinanime.web.app/", credentials: true }));
 
 app.get("/", async (req, res) => {
   // const htmlfil = await fs.readFileSync("./htmlResume.html", "utf-8");
