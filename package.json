@@ -21,6 +21,7 @@
     "dom-parser": "^1.1.5",
     "express": "^4.17.2",
     "fast-levenshtein": "^3.0.0",
+    "googlethis": "^1.8.0",
     "node-fetch": "^3.2.0",
     "nodemon": "^2.0.15",
     "translate": "^1.4.1",

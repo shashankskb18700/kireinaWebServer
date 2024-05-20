@@ -13,6 +13,7 @@ const translate = require("translate");
 const cors = require("cors");
 const { readFile } = require("fs/promises");
 const YouTube = require("youtube-sr").default;
+const google = require("googlethis");
 
 // import { DomParser } from "dom-parser";
 
@@ -371,7 +372,17 @@ app.post("/trailer", async (req, res) => {
   const name = req.body.name;
   const videos = await YouTube.search(req.body.name, { limit: 25 });
   let url = "";
+  const options = {
+    page: 0,
+    safe: false, // Safe Search
+    parse_ads: false, // If set to true sponsored results will be parsed
+    additional_params: {
+      // add additional parameters here, see https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters and https://www.seoquake.com/blog/google-search-param/
+      hl: "en",
+    },
+  };
 
+  const response = await google.search("One Piece", options);
   // console.log(
   //   videos.map((m, i) => `[${++i}] ${m.title} (${m.url})`).join("\n")
   // );
@@ -383,8 +394,14 @@ app.post("/trailer", async (req, res) => {
       console.log(url);
     }
   });
+  console.log(response.knowledge_panel.description);
 
-  res.send(url);
+  const additionalData = {
+    trailer: url,
+    synopsis: response.knowledge_panel.description,
+  };
+
+  res.send(additionalData);
 });
 
 const PORT = process.env.PORT || 5000;
